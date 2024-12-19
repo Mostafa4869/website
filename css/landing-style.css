@@ -1,0 +1,117 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;500;600;700&display=swap");
+:root {
+    --main-color: #1f7e2f;
+    --red: #e74c3c;
+    --orange: #e28d04;
+    --light-color: #888;
+    --light-bg: #eee;
+    --black: #3a5877;
+    --white: #fff;
+    --border: 0.1rem solid rgba(0, 0, 0, 0.2);
+}
+
+.logo img {
+    height: 60px;
+    width: auto;
+}
+
+* {
+    font-family: "Nunito", sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+    border: none;
+    text-decoration: none;
+}
+
+*::selection {
+    background-color: var(--main-color);
+    color: #fff;
+}
+
+html {
+    font-size: 62.5%;
+    overflow-x: hidden;
+}
+
+body {
+    background-color: var(--light-bg);
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%; /* Full width */
+    background-color: var(--white);
+    z-index: 1000;
+    border-bottom: var(--border);
+}
+
+.header .flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem 2rem;
+}
+
+.header .flex .logo {
+    font-size: 2.5rem;
+    color: var(--black);
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%; /* Full width */
+    background-color: var(--white);
+    text-align: center;
+    font-size: 2rem;
+    padding: 2.5rem 2rem;
+    color: var(--black);
+    z-index: 1000;
+}
+
+.landing {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - 13rem); /* Adjusted for header/footer */
+    background-color: var(--light-bg);
+    text-align: center;
+    padding: 2rem;
+}
+
+.landing .content {
+    max-width: 800px;
+}
+
+.landing h1 {
+    font-size: 4rem;
+    color: var(--black);
+    margin-bottom: 1rem;
+}
+
+.landing p {
+    font-size: 2rem;
+    color: var(--light-color);
+    margin-bottom: 2rem;
+}
+
+.landing .btn {
+    background-color: var(--main-color);
+    color: #fff;
+    padding: 1rem 2rem;
+    border-radius: 5rem;
+    font-size: 2rem;
+    text-transform: capitalize;
+    text-decoration: none;
+}
+
+.landing .btn:hover {
+    background-color: var(--black);
+}

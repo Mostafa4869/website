@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
+
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/landing-style.css" />
+    <style>
+        .icons button {
+            font-size: 2rem;
+            margin: 0 5px;
+        }
+    </style>
+</head>
+
+<body>
+    1
+    <header class="header">
+        <section class="flex">
+            <!-- Logo -->
+            <a href="Landing Page2.html" class="logo">
+                <img src="images/university logoo.png" alt="University Logo" class="logo-image" />
+            </a>
+
+
+            <!-- Icons Section -->
+            <div class="icons">
+                <div id="user-btn" class="fas fa-user"></div>
+                <div id="toggle-btn" class="fas fa-sun"></div>
+            </div>
+
+            <!-- User Profile Section -->
+            <div class="profile">
+              <img src="images/pic-1.jpg" class="image" alt="User" />
+              <p class="role">guest</p>
+              <div class="flex-btn">
+                  <a href="login.html" class="option-btn">login</a>
+                  <a href="register.html" class="option-btn">register</a>
+              </div>
+            </div>
+        </section>
+    </header>
+
+
+    </aside>
+
+    <main class="form-container">
+      <form id="loginForm" method="post">
+        <h3>Login Now</h3>
+
+        <p>Your Email <span>*</span></p>
+        <input
+          type="email"
+          id="loginEmail"
+          placeholder="Enter your email"
+          required
+          maxlength="50"
+          class="box"
+        />
+
+        <p>Your Password <span>*</span></p>
+        <input
+          type="password"
+          id="loginPassword"
+          placeholder="Enter your password"
+          required
+          maxlength="20"
+          class="box"
+        />
+
+        <div class="flex-options">
+          <a href="home.html" class="btn">login</a>
+          <a href="forgot-password copy.html" class="forgot-link"
+            ><h2>Forgot Password?</h2></a
+          >
+        </div>
+      </form>
+    </main>
+
+    <footer class="footer">
+      &copy; <span id="current-year"></span> by <span>ZXR TEAM</span> | All
+      rights reserved!
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+    <script>
+      document.getElementById("current-year").textContent =
+        new Date().getFullYear();
+
+      document
+        .getElementById("loginForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          const email = document.getElementById("loginEmail").value;
+          const password = document.getElementById("loginPassword").value;
+
+          const fileInput = document.getElementById("fileInput");
+          const file = fileInput.files[0];
+
+          if (!file) {
+            alert("Please upload the Excel file.");
+            return;
+          }
+
+          const reader = new FileReader();
+          reader.onload = function (event) {
+            const data = new Uint8Array(event.target.result);
+            const workbook = XLSX.read(data, { type: "array" });
+            const firstSheetName = workbook.SheetNames[0];
+            const worksheet = workbook.Sheets[firstSheetName];
+
+            const jsonData = XLSX.utils.sheet_to_json(worksheet);
+
+            const user = jsonData.find(
+              (user) => user.Email === email && user.Password === password
+            );
+
+            if (user) {
+              alert("Login successful!");
+              window.location.href = "home.html";
+            } else {
+              alert("Invalid email or password!");
+            }
+          };
+
+          reader.readAsArrayBuffer(file);
+        });
+    </script>
+  </body>
+</html>

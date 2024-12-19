@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
+
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/landing-style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+</head>
+
+<body>
+    <header class="header">
+        <section class="flex">
+            <a href="Landing Page2.html" class="logo">
+                <img src="images/university logoo.png" alt="" class="logo-image" />
+            </a>
+
+
+            <div class="icons">
+                <div id="user-btn" class="fas fa-user"></div>
+                <div id="toggle-btn" class="fas fa-sun"></div>
+            </div>
+
+            <div class="profile">
+                <img src="images/pic-1.jpg" class="image" alt="User" />
+                <p class="role">guest</p>
+                <div class="flex-btn">
+                    <a href="login.html" class="option-btn">login</a>
+                    <a href="register.html" class="option-btn">register</a>
+                </div>
+            </div>
+        </section>
+    </header>
+
+    <section class="form-container">
+        <form id="registerForm" method="post" enctype="multipart/form-data">
+            <h3>Register Now</h3>
+
+            <p>Your Name <span>*</span></p>
+            <input type="text" id="name" name="name" placeholder="Enter your name" required maxlength="50" class="box" />
+
+            <p>Your Role <span>*</span></p>
+            <select name="role" required class="box" id="role">
+                <option value="" disabled selected>Select your role</option>
+                <option value="student">Student</option>
+                <option value="doctor">Doctor</option>
+                <option value="instructor">Instructor</option>
+            </select>
+
+            <p>Your Email <span>*</span></p>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required maxlength="50" class="box" />
+
+            <p>Your Password <span>*</span></p>
+            <input type="password" id="password" name="pass" placeholder="Enter your password" required maxlength="20" class="box" />
+
+            <p>Your Password <span>*</span></p>
+            <input type="password" id="confirmPassword" name="c_pass" placeholder="Confirm your password" required maxlength="20" class="box" />
+
+            <p>Select Profile <span>*</span></p>
+            <input type="file" name="profile_image" accept="image/*" required class="box" />
+
+            <p>Upload Existing Excel File <span>*</span></p>
+            <input type="file" id="fileInput" accept=".xlsx" required class="box" />
+
+            <input type="submit" value="Register" class="btn" />
+            <p>Already have an account? <a href="login.html">Login now</a></p>
+        </form>
+    </section>
+
+    <script src="js/script.js"></script>
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const role = document.getElementById('role').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const fileInput = document.getElementById('fileInput').files[0];
+
+            const userData = {
+                name: name,
+                role: role,
+                email: email,
+                password: password
+            };
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const data = new Uint8Array(e.target.result);
+                const workbook = XLSX.read(data, {
+                    type: 'array'
+                });
+                const ws = workbook.Sheets[workbook.SheetNames[0]];
+                const existingData = XLSX.utils.sheet_to_json(ws);
+
+                existingData.push(userData);
+
+                const newWs = XLSX.utils.json_to_sheet(existingData);
+                const newWb = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(newWb, newWs, 'Users');
+                XLSX.writeFile(newWb, 'User  Data.xlsx');
+
+                alert('Registration successful and data saved!');
+
+                window.location.href = 'login.html';
+            };
+
+            reader.readAsArrayBuffer(fileInput);
+        });
+    </script>
+
+     <footer class="footer">
+        &copy; <span id="current-year"></span> by <span>ZXR TEAM</span> | All rights reserved!
+    </footer>
+    
+</body>
+
+</html>
